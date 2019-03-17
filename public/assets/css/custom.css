@@ -1,0 +1,76 @@
+.no-padding {
+    padding: 0 !important;
+}
+
+.navbar-inverse {
+    background-color: #804c9e;
+}
+
+.navbar-brand {
+    margin-left: 10px;
+    background-size: contain;
+    background-image: url('/assets/img/anytime-logo-white.png');
+}
+
+header .toolbar .dropdown {
+    border: none;
+}
+
+.panel-primary .panel-heading {
+    background: #804c9e;
+}
+
+a.username {
+    font-size: 15px !important;
+}
+
+header #leftmenu-trigger {
+    border: none !important;
+}
+
+.color-primary {
+    background-color: #804c9e;
+}
+
+.stat {
+    text-align: center;
+    /* border-bottom: 2px solid #00000020; */
+}
+
+.stat h4 {
+    font-size: 16px;
+    color: #00000070;
+}
+
+.stat h3 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.stats-row .stat h3,
+.stats-row .stat h4 {
+    margin: 0;
+    padding: 0;
+}
+
+
+
+.tab-content {
+    background: white;
+}
+
+.tab-container .nav-tabs li a {
+    font-size: 18px;
+}
+
+.statCont {
+    overflow: scroll;
+}
+
+.dataTables_wrapper > div {
+    flex-wrap: nowrap;
+}
+
+#info img {
+    max-width: 100%;
+}
