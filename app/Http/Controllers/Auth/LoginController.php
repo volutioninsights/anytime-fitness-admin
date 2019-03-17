@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use Auth;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -39,22 +39,37 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    public function authenticate(Request $request)
+    {
+        dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            // Authentication passed...
+            return redirect()->intended('dash');
+        }
+    }
+
     public function login(Request $request)
     {
-        if ($request->wantsJson()) {
-            $auth = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
-            if ($auth) {
-                $return = ["success" => true, "token" => Auth::user()->api_token];
-                return response()->json($return);
-            } else {
-                return response('Unauthorized.', 401);
-            }
-        } else {
-            if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'staff' => true], true)) {
-                return redirect()->intended('dashboard');
-            } else {
-                return redirect('/');
-            }
+
+        //dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+            return redirect()->intended('dashboard');
         }
+
+//        if ($request->wantsJson()) {
+//            $auth = Auth::attempt(['email' => $request->email, 'password' => $request->password]);
+//            if ($auth) {
+//                $return = ["success" => true, "token" => Auth::user()->api_token];
+//                return response()->json($return);
+//            } else {
+//                return response('Unauthorized.', 401);
+//            }
+//        } else {
+//            if (Auth::attempt(['email' => $request->email, 'password' => $request->password, 'staff' => true], true)) {
+//                return redirect()->intended('dashboard');
+//            } else {
+//                return redirect('/');
+//            }
+//        }
     }
 }

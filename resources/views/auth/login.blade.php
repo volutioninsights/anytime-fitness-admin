@@ -5,25 +5,29 @@
 	<a href="index.htm"><img src="/assets/img/anytime-logo-white.png" alt="Logo" class="brand" /></a>
 	<div class="panel panel-primary">
 		<div class="panel-body">
-			<h4 class="text-center" style="margin-bottom: 25px;">Log in</h4>
+			<h4 class="text-center" style="margin-bottom: 25px;">Log in attempt</h4>
             <form method="POST" class="form-horizontal" action="{{ route('login') }}">
                         @csrf
 					<div class="form-group">
 						<label for="email" class="control-label col-sm-4" style="text-align: left;">Email</label>
 						<div class="col-sm-8">
-							<input type="text" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>
+							<input type="text" class="form-control" id="email" name="email">
+							{{--<input type="text" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" name="email" placeholder="Email" value="{{ old('email') }}" required autofocus>--}}
 						</div>
 					</div>
 					<div class="form-group">
 						<label for="password" class="control-label col-sm-4" style="text-align: left;">Password</label>
 						<div class="col-sm-8">
+							<input type="text" class="form-control" id="password" name="password">
+{{--
 							<input type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" id="password" name="password" placeholder="Password" required>
+--}}
 						</div>
 					</div>
 					<div class="clearfix">
 						<div class="pull-right"><label><input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}> Remember Me</label></div>
 					</div>
-					<button type="submit" class="btn btn-primary btn-block">Log In</a>
+				<button type="submit" class="btn btn-primary btn-block">Log In</button>
 				</form>
 		</div>
 		<div class="panel-footer">

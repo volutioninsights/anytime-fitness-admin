@@ -11,6 +11,7 @@ class UserController extends Controller
 {
     public function password(Request $request){
         $user = Auth::user();
+
         if($request->isMethod("post")){
             $e = [];
             // Save
