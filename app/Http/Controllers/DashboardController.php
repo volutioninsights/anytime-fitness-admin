@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Charts\RevenueMetrics;
 use App\User;
 use App\Gyms;
 use App\Sessions;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
@@ -110,7 +113,64 @@ class DashboardController extends Controller
                 ],
             ],
         ];
+       $revenueBymonth = Sessions::selectRaw('MONTH(created_at) as month,sum(price) as sum')
+           ->where('price', '>=', 0)
+           ->groupBy('month')
+           ->orderBy('month', 'asc')
+           ->get();
+        $someData = collect();
+        $revenueBymonth->each(function($revenue) use ($someData){
+            $date =  Carbon::createFromDate(null,$revenue->month,1)->toDateString();
+            $month = [
+                Carbon::parse($date)->format(' F Y'),
+                $revenue->sum
+            ];
+            $someData->push($month);
 
-        return view('dashboard')->with($data);
+        });
+
+        $someData->toArray();
+
+$getwell =         $this->getWellnessVsPT();
+dd($getwell);
+
+        return view('dashboard', compact('someData'))->with($data);
+        //return view('dashboard')->with(compact('data'));
+    }
+
+    public function getWellnessVsPT()
+    {
+
+        $wellnessCount = Sessions::where('sessions_type', 'like', '%wc%')->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('F Y');
+            });
+
+        $pt = Sessions::where('sessions_type', 'not like', '%wc%')->get()
+            ->groupBy(function ($val) {
+                return Carbon::parse($val->created_at)->format('F Y');
+            });
+
+        $count = $wellnessCount->keys();
+        $format = collect();
+        $d = 0;
+//        $wellnessCount->each(function ($session) use ($count,$format, &$d){
+//
+//            $c = [
+//                $count[$d],
+//                $session->count()
+//            ];
+//            $d++;
+//            $format->push($c);
+//
+//        });
+
+        
+        $f = 0;
+        $pt->each(function ($session) use ($count,$format, &$f){
+        return ($session->count()) ;
+        });
+
+return [$wellnessCount, $pt];
     }
 }

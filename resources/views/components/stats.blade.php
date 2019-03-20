@@ -2,6 +2,7 @@
     <div class="panel panel-primary">
         <div class='panel-body statCont'>
                 <div class='row stats flex-nowrap'>
+
                 @foreach ($stats as $stat)
                     @if (($loop->index % 4) === 0 && $loop->index !== 0)
                         </div>

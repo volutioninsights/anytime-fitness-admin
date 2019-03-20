@@ -39,21 +39,13 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
-    public function authenticate(Request $request)
-    {
-        dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            // Authentication passed...
-            return redirect()->intended('dash');
-        }
-    }
+
 
     public function login(Request $request)
     {
 
-        //dd(Auth::attempt(['email' => $request->email, 'password' => $request->password]));
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-            return redirect()->intended('dashboard');
+            return redirect()->intended('dash');
         }
 
 //        if ($request->wantsJson()) {

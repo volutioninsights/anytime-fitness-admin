@@ -24,6 +24,7 @@
 
     <div class="col-12 col-md">
         <div class="panel panel-primary">
+            {{ $someData }}
             <div id="convpie" class="panel-body text-center">
 
             </div>
@@ -79,7 +80,7 @@
 <script src="https://code.highcharts.com/modules/drilldown.js"></script>
 <script type='text/javascript' src='/assets/plugins/sparklines/jquery.sparklines.min.js'></script>
 <script type="text/javascript">
-
+    var data = {!! json_encode($someData) !!};
 Highcharts.chart('reassesmentConv', {
         chart: {
             type: 'column'
@@ -443,6 +444,7 @@ const rePie = Highcharts.chart('reassesment', {
     // pie.showLoading();
 
 
+
     const chart = Highcharts.chart('revenue', {
         chart: {
             type: 'column'
@@ -475,37 +477,22 @@ const rePie = Highcharts.chart('reassesment', {
         },
         series: [{
             "name": 'Monthly Overall Revenue',
-            "data": [{
-                    "drilldown": "August",
-                    "y": Math.floor(Math.random() * 500000),
-                    "name": "August 18"
+            "data": [
+                {
+                    "drilldown":  data[0][0] ,
+                    "y": data[0][1],
+                    "name": data[0][0]
                 },
                 {
-                    "drilldown": "September",
-                    "y": Math.floor(Math.random() * 500000),
-                    "name": "September 18"
+                    "drilldown":  data[1][0] ,
+                    "y": data[1][1],
+                    "name": data[1][0]
                 },
                 {
-                    "drilldown": "October",
-                    "y": Math.floor(Math.random() * 500000),
-                    "name": "October 18"
-                },
-                {
-                    "drilldown": "November",
-                    "y": Math.floor(Math.random() * 500000),
-                    "name": "November 18"
-                },
-                {
-                    "drilldown": "December",
-                    "y": Math.floor(Math.random() *
-                        500000),
-                    "name": "December 18"
-                },
-                {
-                    "drilldown": "January",
-                    "y": Math.floor(Math.random() * 500000),
-                    "name": "January 19"
-                },
+                    "drilldown":  data[2][0] ,
+                    "y": data[2][1],
+                    "name": data[2][0]
+                }
             ],
             color: {
                 linearGradient: {
