@@ -131,11 +131,12 @@ class DashboardController extends Controller
 
         $someData->toArray();
 
-$getwell =         $this->getWellnessVsPT();
-dd($getwell);
+        $wellnessVsPT = $this->getWellnessVsPT();
+        //$gymRevenue = $this->gymHighestRevenue();
 
-        return view('dashboard', compact('someData'))->with($data);
-        //return view('dashboard')->with(compact('data'));
+        //dd($wellnessVsPT);
+        return view('dashboard', compact('someData', 'wellnessVsPT'))->with($data);
+
     }
 
     public function getWellnessVsPT()
@@ -154,23 +155,64 @@ dd($getwell);
         $count = $wellnessCount->keys();
         $format = collect();
         $d = 0;
-//        $wellnessCount->each(function ($session) use ($count,$format, &$d){
-//
-//            $c = [
-//                $count[$d],
-//                $session->count()
-//            ];
-//            $d++;
-//            $format->push($c);
-//
-//        });
+        $wellnessCount->each(function ($session) use ($count,$format, &$d){
 
-        
+            $c = [
+                $count[$d],
+                $session->count()
+            ];
+            $d++;
+            $format->push($c);
+
+       });
+
+        $ptCount = $pt->keys();
+        $ptData = collect();
         $f = 0;
-        $pt->each(function ($session) use ($count,$format, &$f){
-        return ($session->count()) ;
+        $pt->each(function ($session) use ($ptCount,$ptData, &$f){
+            $c = [
+                $ptCount[$f],
+                $session->count()
+            ];
+            $f++;
+            $ptData->push($c);
         });
 
-return [$wellnessCount, $pt];
+    return [$format, $ptData];
+    }
+
+    public function gymHighestRevenue()
+    {
+       $gyms = Gyms::with('pts')->get();
+
+       foreach ($gyms as $gym) {
+
+        $pts = $gym->pts->pluck('id');
+
+        foreach ($pts as $pt) {
+            $query = Sessions::selectRaw('sum(price) as sum')
+                ->where('pt_id', $pt)
+                ->where('price', '>=', 0)
+                ->get();
+            $total[$gym->id][$pt] = $query[0]->sum;
+
+        }
+    }
+       $format = array_keys($total);
+       foreach ($total as $tot) {
+
+           $format[][] =  array_sum($tot);
+       }
+
+
+
+       return $total;
+    }
+
+    public function ptHighestRevenue()
+    {
+
     }
 }
+
+

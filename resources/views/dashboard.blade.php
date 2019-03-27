@@ -24,7 +24,7 @@
 
     <div class="col-12 col-md">
         <div class="panel panel-primary">
-            {{ $someData }}
+
             <div id="convpie" class="panel-body text-center">
 
             </div>
@@ -81,6 +81,7 @@
 <script type='text/javascript' src='/assets/plugins/sparklines/jquery.sparklines.min.js'></script>
 <script type="text/javascript">
     var data = {!! json_encode($someData) !!};
+    var wvspt = {!! json_encode($wellnessVsPT) !!};
 Highcharts.chart('reassesmentConv', {
         chart: {
             type: 'column'
